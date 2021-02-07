@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # plainMail2HTML - Convert a text/plain Email to plain+HTML Email.
 #
@@ -41,9 +41,10 @@ __usage__ = """
    plain2html [options]
 """
 
+
 def get_callback(callback_str):
     """Convert a function string to a function reference"""
-    
+
     # This is a quick-n-dirty patch. Need especially better error
     # handling.
     dot = callback_str.rindex('.')
@@ -54,22 +55,22 @@ def get_callback(callback_str):
 
 def get_args():
     """Parse command line arguments"""
-    
+
     description = """Create a HTML message part for a given email
                      message and attach it to the message"""
-    
+
     parser = argparse.ArgumentParser(description=description, usage=__usage__)
-    
+
     parser.add_argument('-m', '--message-file', type=argparse.FileType('r'),
                         default=sys.stdin,
                         help='an email file to process.')
-    
+
     parser.add_argument('-b', '--allow-8bit', action='store_true',
                         help='enable using 8bit for HTML message')
-    
+
     return parser.parse_args()
 
-    
+
 def main():
     """The main function."""
 
@@ -82,10 +83,9 @@ def main():
         # Initialize a  MessageProcessor instance
         mp = MessageProcessor(html_parser=html_parser,
                               allow_8bit=args.allow_8bit)
-        
+
         # Create the HTML part and attach it to the message
         html_msg = mp.generate_html_msg_from_file(args.message_file)
-                                                  
 
         sys.stdout.write(html_msg.as_string())
 
@@ -98,6 +98,7 @@ def main():
         sys.exit(1)
     else:
         sys.exit()
+
 
 if __name__ == '__main__':
     main()
