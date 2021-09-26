@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 # plainMail2HTML - Convert a text/plain Email to plain+HTML Email.
 #
@@ -31,7 +31,7 @@
 
 set -uf -o pipefail
 
-PATH=/bin:/usr/bin
+PATH=/bin:/usr/bin:/usr/local/bin:/Users/nagakiran/bin
 export PATH
 
 # Full path to the mail HTML template used for creating the HTML part.
@@ -47,7 +47,7 @@ export PYTHONPATH
 
 config=~/.plain2htmlrc
 default_send_mail_cmd="/usr/sbin/sendmail -oi"
-sendmail_cmd=
+sendmail_cmd=msmtp
 # flags to plain2html, can be set in config file
 p2h_flags=
 [[ -r $config ]] && . $config
@@ -81,6 +81,7 @@ trap on_exit INT TERM EXIT
 $plain_mail_to_html $p2h_flags > $tmpfile
 
 status=$?
+cp $tmpfile /tmp/1.msg
 
 if (( $status ))
 then
